@@ -13,7 +13,7 @@ fi
 
 echo -n "Mounting $REMOTE_PATH to $LOCAL_PATH ... "
 
-mount -t cifs $REMOTE_PATH $LOCAL_PATH -o user=$REMOTE_USER,password=$REMOTE_PASSWORD,vers=3.02
+mount -t cifs $REMOTE_PATH $LOCAL_PATH -o user=$REMOTE_USER,password=$REMOTE_PASSWORD,vers=3.02,cache=none
 
 echo "Done!"
 

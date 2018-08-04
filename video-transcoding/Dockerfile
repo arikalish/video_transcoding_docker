@@ -1,8 +1,8 @@
 FROM arikalish/ruby-bionic:latest
 LABEL maintainer="Ari Kalish <arikalish@gmail.com>"
 
-ENV GEM_VERSION 0.19.0
-ENV HANDBRAKE_VERSION 1.1.0
+ENV GEM_VERSION 0.20.0
+ENV HANDBRAKE_VERSION 1.1.1
 
 # install build dependencies to compile ffmpeg from master
 RUN set -ex \
@@ -48,6 +48,7 @@ RUN set -ex \
     mp4v2-utils \
     mpv \
 	cifs-utils \
+	nano \
   ' \
   && apt-get update \
   && apt-get install -y --no-install-recommends $buildDeps \
@@ -114,8 +115,8 @@ RUN set -ex \
   #&& cd /usr/src/ffmpeg \
   #&& rm -rf HandBrake
   
-  # FFmpeg 4.0
-  RUN wget -O ffmpeg.tar.gz https://github.com/FFmpeg/FFmpeg/archive/n4.0.tar.gz \
+  # FFmpeg 4.0.2
+  RUN wget -O ffmpeg.tar.gz https://github.com/FFmpeg/FFmpeg/archive/n4.0.2.tar.gz \
   && tar zxvf ffmpeg.tar.gz \
   && mv FFmpeg* ffmpeg_src \
   && cd ffmpeg_src \
@@ -145,18 +146,23 @@ RUN set -ex \
   && mv /usr/src/ffmpeg/bin/ff* /usr/local/bin \
   && rm -rf /usr/src/ffmpeg
 
-RUN set -ex \
+  WORKDIR /
+  
+  RUN rm -rf HandBrake* \
+  && rm -rf fdk* \
+  && rm -rf ffmpeg* \
+  && rm -rf nasm* \
+  && rm -rf x265* \
+  && rm -rf x264*
+  
+  RUN set -ex \
   # Install application dependencies
   && apt-get purge -y --auto-remove $buildDeps \
   && rm -rf /var/lib/apt/lists/* \
   && gem install video_transcoding -v "$GEM_VERSION"
 
-WORKDIR /
-
 COPY mount.sh /mount.sh
 
 RUN chmod +x /mount.sh
-
-WORKDIR /
 
 ENTRYPOINT ["/mount.sh"]
