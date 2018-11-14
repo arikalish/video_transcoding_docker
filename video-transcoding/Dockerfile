@@ -1,8 +1,13 @@
 FROM arikalish/ruby-bionic:latest
 LABEL maintainer="Ari Kalish <arikalish@gmail.com>"
 
-ENV GEM_VERSION 0.20.0
-ENV HANDBRAKE_VERSION 1.1.1
+ENV GEM_VERSION 0.21.0
+ENV HANDBRAKE_VERSION 1.1.2
+
+ENV LOCAL_PATH /data
+ENV REMOTE_PATH //remote_path
+ENV REMOTE_USER user
+ENV REMOTE_PASSWORD password
 
 # install build dependencies to compile ffmpeg from master
 RUN set -ex \
