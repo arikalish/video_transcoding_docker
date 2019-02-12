@@ -1,7 +1,7 @@
 FROM arikalish/ruby-bionic:latest
 LABEL maintainer="Ari Kalish <arikalish@gmail.com>"
 
-ENV GEM_VERSION 0.22.0
+ENV GEM_VERSION 0.23.0
 ENV HANDBRAKE_VERSION 1.2.0
 
 ENV LOCAL_PATH /data
